@@ -164,14 +164,19 @@ class Ui_MainWindow(object):
         a = Algorithms()
         mbrs = []
         ef = 0
+        rot_10 = 0
         for building in buildings:
             mbr = a.createMBR(building)
             mbrs.append(mbr)
-            ef = ef + a.Efficiency(mbr,building)
+            ef = ef + a.Efficiency(mbr,building)%360
+            if (a.Efficiency(mbr,building)%360) < 10:
+                rot_10 = rot_10 + 1
+                
         self.Canvas.setMBR(mbrs)
         self.Canvas.repaint()
         EF = round(ef/len(buildings),5)
         print("MBR  " + str(EF))
+        print("MBR - buildings rotated under 10° - " + str(rot_10/len(buildings)*100) + "%")
         
     
     # PCA CLICK ------
@@ -180,14 +185,19 @@ class Ui_MainWindow(object):
         a = Algorithms()
         pca_results = []  # list of PCAs
         ef = 0
+        rot_10 = 0
         for building in buildings:
             pca_result = a.createERPCA(building)
             pca_results.append(pca_result)
-            ef = ef + a.Efficiency(pca_result,building)
+            ef = ef + a.Efficiency(pca_result,building)%360
+            if a.Efficiency(pca_result,building)%360 < 10:
+                rot_10 = rot_10 + 1
+            
         self.Canvas.setER(pca_results)  # paint all PCAs
         self.Canvas.repaint()
         EF = round(ef/len(buildings),5)
         print("PCA  " + str(EF))
+        print("PCA - buildings rotated under 10° - " + str(rot_10/len(buildings)*100) + "%")
 
         
         
@@ -197,14 +207,18 @@ class Ui_MainWindow(object):
         a = Algorithms()
         wa_results = []  # list of WAs
         ef = 0
+        rot_10 = 0
         for building in buildings:
             wa_result = a.wallAverage(building)
             wa_results.append(wa_result)
-            ef = ef + a.Efficiency(wa_result,building)
+            ef = ef + a.Efficiency(wa_result,building)%360
+            if a.Efficiency(wa_result,building)%360 < 10:
+                rot_10 = rot_10 + 1
         self.Canvas.setWA(wa_results)  # paint all WAs
         self.Canvas.repaint()
         EF = round(ef/len(buildings),5)
         print("Wall Average  " + str(EF))
+        print("WA - buildings rotated under 10° - " + str(rot_10/len(buildings)*100) + "%")
         
         
     # LONGEST EDGE CLICK ------
@@ -213,14 +227,18 @@ class Ui_MainWindow(object):
         a = Algorithms()
         le_results = []  # list of LEs
         ef = 0
+        rot_10 = 0
         for building in buildings:
             le_result = a.longestEdge(building)
             le_results.append(le_result)
-            ef = ef + a.Efficiency(le_result,building)
+            ef = ef + a.Efficiency(le_result,building)%360
+            if a.Efficiency(le_result,building)%360 < 10:
+                rot_10 = rot_10 + 1
         self.Canvas.setLE(le_results) # paint all LEs
         self.Canvas.repaint()
         EF = round(ef/len(buildings),5)
         print("Longest Edge  " + str(EF))
+        print("LE - buildings rotated under 10° - " + str(rot_10/len(buildings)*100) + "%")
         
     # WEIGHTED BISECTOR CLICK ------
     def weightedBisectorClick(self):
@@ -228,15 +246,18 @@ class Ui_MainWindow(object):
         a = Algorithms()
         wb_results = []  # list of WBs
         ef = 0
+        rot_10 = 0
         for building in buildings:
             wb_result = a.weightedBisector(building)
             wb_results.append(wb_result)
-            ef = ef + a.Efficiency(wb_result,building)
+            ef = ef + a.Efficiency(wb_result,building)%360
+            if a.Efficiency(wb_result,building)%360 < 10:
+                rot_10 = rot_10 + 1
         self.Canvas.setWB(wb_results) # paint all WBs
         self.Canvas.repaint()
         EF = round(ef/len(buildings),5)
         print("Weighted Bisector  " + str(EF))
-
+        print("WB - buildings rotated under 10° - " + str(rot_10/len(buildings)*100) + "%")
     # CLEARS ------
     def clearClick(self):
         # Function of clear results button
